@@ -1,14 +1,18 @@
-Curso SQL Completo
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/lucarauj/curso-SQL-completo/blob/main/LICENSE)
+
+<h1 align="center"> Curso SQL Completo </h1>
+
+## Tecnologia utilizada: <img width="90px" src="https://github.com/lucarauj/assets/blob/main/MySQL.png" />
 
 ### Conceitos importantes:
 
 - SGBD: Sistema Gerenciador de Banco de Dados;
 - SQL: Linguagem Estruturada de Consulta;
 - DDL (Data Definition Language): Linguagem de Definição de Dados (CREATE, ALTER, DROP);
-– DML (Data Manipulation Language): Linguagem de Manipulação de Dados (INSERT, UPDATE, DELETE);
-– DQL (Data Query Language): Linguagem de Consulta de Dados (SELECT);
-– DCL (Data Control Language): Linguagem de Controle de Dados (GRANT, REVOKE)
-– DTL (Data Transaction Language): Linguagem de Transação de Dados (START TRANSACTION, COMMIT, ROLLBACK);
+- DML (Data Manipulation Language): Linguagem de Manipulação de Dados (INSERT, UPDATE, DELETE);
+- DQL (Data Query Language): Linguagem de Consulta de Dados (SELECT);
+- DCL (Data Control Language): Linguagem de Controle de Dados (GRANT, REVOKE)
+- DTL (Data Transaction Language): Linguagem de Transação de Dados (START TRANSACTION, COMMIT, ROLLBACK);
 - Chave Primária (Primary Key, PK): Coluna com valores únicos;
 - Chave Estrangeira (Foreign Key, FK): Coluna que armazena a chave primária de outra tabela;
 - Unsigned: o tipo de dado não armazena valores negativos;
@@ -39,7 +43,7 @@ USE curso_sql;
 ### Criando uma tabela:
 
 ```
-CREATE table funcionarios
+CREATE TABLE funcionarios
 (
     id int unsigned not null auto_increment,
     nome varchar(45) not null,
@@ -52,7 +56,7 @@ CREATE table funcionarios
 ### Criando outra tabela com chave estrangeira:
 
 ```
-CREATE table veiculos
+CREATE TABLE veiculos
 (
     id int unsigned not null auto_increment,
     funcionario_id int unsigned default null,
@@ -66,13 +70,13 @@ CREATE table veiculos
 ### Alterando nome e tipo de campo em uma tabela:
 
 ```
-ALTER table funcionarios CHANGE COLUMN nome nome_func varchar(50) not null;
+ALTER TABLE funcionarios CHANGE COLUMN nome nome_func varchar(50) NOT NULL;
 ```
 
 ### Comando para excluir uma tabela:
 
 ```
-DROP table salarios;
+DROP TABLE salarios;
 ```
 
 ### Comando para criar um índice em uma tabela:
@@ -81,7 +85,7 @@ DROP table salarios;
 CREATE INDEX nomes ON funcionarios (nome(6));
 ```
 
-### Salvando/Abrindo os comandos utilizados em um script:
+### Salvando/Abrindo um script:
 
 - File -> Save Script As...
 - File -> Open SQL Script...
@@ -108,8 +112,7 @@ UPDATE funcionarios SET salario = salario * 1.1 WHERE nome = 'Fernando';
 ### Comando para atualizar TODOS os dados:
 
 ```
-SET SQL_SAFE_UPDATES = 0; ( = 1; para ativar a atualização segura)
-UPDATE funcionarios SET salario = salario * 1.1;
+SET SQL_SAFE_UPDATES = 0; ( = 1; para ativar a atualização segura) UPDATE funcionarios SET salario = salario * 1.1;
 ```
 
 ### Configurando as casas decimais dos dados (ROUND):
@@ -126,9 +129,20 @@ DELETE FROM funcionarios WHERE id = 4;
 
 ### Filtros de Seleção (WHERE):
 
-```
-=, !=, >, >=, <, <=, IS NULL, IS NOT NULL, BETWEEN (entre intervalo), LIKE (valor parcial), AND, OR, NOT.
-```
+-  '='
+-  '!=' 
+-  '<>'
+-  '>'
+-  '>='
+-  '<' 
+-  '<=' 
+-  'IS NULL' 
+-  'IS NOT NULL' 
+-  'BETWEEN (entre intervalo)' 
+-  'LIKE (valor parcial)'
+-  'AND'
+-  'OR'
+-  'NOT'
 
 ```
 SELECT * FROM funcionarios WHERE salario > 2000;
@@ -166,37 +180,37 @@ SELECT * FROM funcionarios WHERE id = 5;
 ### Relacionamento entre tabelas
 
 
-(INNER JOIN) - Join padrão.
+- (INNER JOIN) - Join padrão.
 
 ```
 SELECT * FROM funcionarios f INNER JOIN veiculos v ON v.funcionario_id = f.id;
 ```
 
-(EQUI JOIN) - Chaves de mesmo nome entre tabelas.
+- (EQUI JOIN) - Chaves de mesmo nome entre tabelas.
 
 ```
 SELECT * FROM T1 JOIN T2 USING Chave; [Elimina os campos em comum]
 ```
 
-(NON EQUI JOIN) - Relacionamento sem um campo em comum.
+- (NON EQUI JOIN) - Relacionamento sem um campo em comum.
 
 ```
 SELECT * FROM funcionarios INNER JOIN cpfs USING(id);
 ```
 
-(OUTER JOIN, LEFT JOIN, LEFT OUTER JOIN) - Linhas que não satisfazem a condição de união. [lado esquerdo como base]
+- (OUTER JOIN, LEFT JOIN, LEFT OUTER JOIN) - Linhas que não satisfazem a condição de união. [lado esquerdo como base]
 
 ```
 SELECT * FROM funcionarios f LEFT JOIN veiculos v ON v.funcionario_id = f.id; 
 ```
 
-(RIGHT JOIN, RIGHT OUTER JOIN) - Linhas que não satisfazem a condição de união. [lado direito como base]
+- (RIGHT JOIN, RIGHT OUTER JOIN) - Linhas que não satisfazem a condição de união. [lado direito como base]
 
 ```
 SELECT * FROM funcionarios f RIGHT JOIN veiculos v ON v.funcionario_id = f.id;
 ```
 
-(FULL OUTER JOIN) - Linhas que satisfazem e não satisfazem a condição de união. [Implementação para MySQL]:
+- (FULL OUTER JOIN) - Linhas que satisfazem e não satisfazem a condição de união. [Implementação para MySQL]:
 
 ```
 SELECT * FROM funcionarios f LEFT JOIN veiculos v ON v.funcionario_id = f.id
@@ -204,7 +218,7 @@ UNION
 SELECT * FROM funcionarios f RIGHT JOIN veiculos v ON v.funcionario_id = f.id;
 ```
 
-(SELF JOIN) - União da tabela com ela mesma.
+- (SELF JOIN) - União da tabela com ela mesma.
 
 ```
 SELECT a.nome, b.nome FROM clientes a JOIN clientes b ON a.quem_indicou = b.id;
@@ -364,7 +378,7 @@ GRANT SELECT ON curso_sql.* TO 'lukas'@'%';
 GRANT INSERT ON curso_sql.funcionarios TO 'lukas'@'%';
 ```
 
-### Configurando permissões:
+### Revogando permissões:
 
 ```
 REVOKE INSERT ON curso_sql.funcionarios FROM 'lukas'@'%';
@@ -489,3 +503,11 @@ FOR EACH ROW CALL limpa_pedidos;
 ```
 DROP TRIGGER nome;
 ```
+## 🥇🏆🎖👨‍🎓📚👇 
+<img width="650px" src="https://github.com/lucarauj/curso-SQL-completo/blob/main/Certificado.png"/>
+
+## Aluno
+
+#### Lucas Araujo
+
+<a href="https://www.linkedin.com/in/lucarauj"><img alt="lucarauj | LinkdeIN" width="40px" src="https://user-images.githubusercontent.com/43545812/144035037-0f415fc7-9f96-4517-a370-ccc6e78a714b.png" /></a>
